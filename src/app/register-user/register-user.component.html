@@ -1,0 +1,43 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Podaj dane użytkownika</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>
+            <mat-form-field>
+                <mat-label>Imię</mat-label>
+                <input matInput #input maxlength="20" minlength="3">
+                <mat-hint align="end">{{input.value.length}}/20</mat-hint>
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+                <mat-label>Nazwisko</mat-label>
+                <input matInput #input maxlength="20" minlength="3">
+                <mat-hint align="end">{{input.value.length}}/20</mat-hint>
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+                <mat-label>Wiek</mat-label>
+                <input matNativeControl type="number">
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+                <mat-label>Login</mat-label>
+                <input matInput #input maxlength="20" minlength="3">
+                <mat-hint align="end">{{input.value.length}}/20</mat-hint>
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+                <mat-label>Hasło</mat-label>
+                <input type="password"  matInput #input minlength="5">
+            </mat-form-field>
+        </p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button (click)="registerUser()">Zapisz</button>
+    </mat-card-actions>
+</mat-card>

@@ -1,0 +1,34 @@
+<mat-card>
+    <mat-card-header>Użytkownicy</mat-card-header>
+    <mat-card-content>
+        <table mat-table [dataSource]="users">
+            <ng-container matColumnDef="firstName">
+                <th mat-header-cell *matHeaderCellDef>Imię</th>
+                <td mat-cell *matCellDef="let user">{{user.firstName}}</td>
+            </ng-container>
+            <ng-container matColumnDef="lastName">
+                <th mat-header-cell *matHeaderCellDef>Nazwisko</th>
+                <td mat-cell *matCellDef="let user">{{user.lastName}}</td>
+            </ng-container>
+            <ng-container matColumnDef="age">
+                <th mat-header-cell *matHeaderCellDef>Wiek</th>
+                <td mat-cell *matCellDef="let user">{{user.age}}</td>
+            </ng-container>
+            <ng-container matColumnDef="login">
+                <th mat-header-cell *matHeaderCellDef>Login</th>
+                <td mat-cell *matCellDef="let user">{{user.login}}</td>
+            </ng-container>
+            <ng-container matColumnDef="tools">
+                <th mat-header-cell *matHeaderCellDef>Akcja <button mat-icon-button matTooltip="Dodaj"><mat-icon>person_add</mat-icon></button></th>
+                <td mat-cell *matCellDef="let user">
+                    <button mat-icon-button matTooltip="Usuń" (click)="deleteUser(user)"><mat-icon>person_remove</mat-icon></button>
+                    <button mat-icon-button matTooltip="Edytuj"><mat-icon>manage_accounts</mat-icon>></button>
+                    <button mat-icon-button matTooltip="Role"><mat-icon>groups</mat-icon></button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+        </table>
+    </mat-card-content>
+</mat-card>
