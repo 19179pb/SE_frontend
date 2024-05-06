@@ -1,0 +1,84 @@
+<h2 mat-dialog-title>Dodaj użytkownika</h2>
+<mat-dialog-content>
+    <form [formGroup]="newUserForm">
+        <p>
+            <mat-form-field>
+                <mat-label>Nazwisko</mat-label>
+                <input matInput placeholder="Nazwisko" formControlName="lastName" required minlength="3" maxlength="50">
+                @if (newUserForm.controls['lastName'].errors?.['required']) {
+                    <mat-error>Nazwisko jest <strong>wymagane</strong></mat-error>
+                }
+                @if (newUserForm.controls['lastName'].errors?.['minlength']) {
+                    <mat-error>Nazwisko jest <strong>za krótkie</strong></mat-error>
+                }
+                @if (newUserForm.controls['lastName'].errors?.['pattern']) {
+                    <mat-error>Nazwisko musi się zaczynać <strong>dużą</strong> literą</mat-error>
+                }
+            </mat-form-field>
+            
+        </p><p>
+            <mat-form-field>
+                <mat-label>Imię</mat-label>
+                <input matInput placeholder="Imię" formControlName="firstName" required minlength="3" maxlength="20">
+                @if (newUserForm.controls['firstName'].errors?.['required']) {
+                    <mat-error>Imię jest <strong>wymagane</strong></mat-error>
+                }
+                @if(newUserForm.controls['firstName'].errors?.['minlength']){
+                    <mat-error>Imię jest <strong>za krótkie</strong></mat-error>
+                }
+                @if(newUserForm.controls['firstName'].errors?.['pattern']) {
+                    <mat-error>Imię musi się zaczynać <strong>dużą</strong> literą</mat-error>
+                }
+            </mat-form-field>
+    
+        </p><p>
+            <mat-form-field>
+                <mat-label>Wiek</mat-label>
+                <input matInput type="number" formControlName="age" placeholder="Wiek" required>
+                @if(newUserForm.controls['age'].errors?.['required']) {
+                    <mat-error>Wiek jest <strong>wymagany</strong></mat-error>
+                }
+                @if(newUserForm.controls['age'].errors?.['min']) {
+                    <mat-error>Użytkownik musi mieć co najmniej <strong>18</strong> lat</mat-error>
+                }
+            </mat-form-field>
+        </p><p>
+            <mat-form-field>
+                <mat-label>Login</mat-label>
+                <input matInput placeholder="Login" formControlName="login" minlength="3" maxlength="20">
+                @if(newUserForm.controls['login'].errors?.['required']) {
+                    <mat-error>Login jest <strong>wymagany</strong></mat-error>
+                }
+                @if(newUserForm.controls['login'].errors?.['minlength']) {
+                    <mat-error>Login jest <strong>za krótki</strong></mat-error>
+                }
+            </mat-form-field>
+        </p><p>
+            <mat-form-field>
+                <mat-label>Hasło</mat-label>
+                <input type="password" matInput formControlName="password" placeholder="Hasło" required minlength="5">
+                @if(newUserForm.controls['password'].errors?.['required']) {
+                    <mat-error>Hasło jest <strong>wymagane</strong></mat-error>
+                }
+                @if(newUserForm.controls['password'].errors?.['minlength']) {
+                    <mat-error>Hasło jest <strong>za krótkie</strong></mat-error>
+                }
+            </mat-form-field>
+        </p><p>
+            <mat-form-field>
+                <mat-label>Rola</mat-label>
+                <mat-select required formControlName="role">
+                    <mat-option value="1">Admin</mat-option>
+                    <mat-option value="2">Użytkownik</mat-option>
+                    <mat-option value="3">Użytkownik ograniczony</mat-option>
+                </mat-select>
+                @if(newUserForm.controls['role'].errors?.['required']) {
+                    <mat-error>Rola jest <strong>wymagana</strong></mat-error>
+                }
+
+            </mat-form-field>
+        </p>
+        <button [disabled]="!newUserForm.valid" mat-button [mat-dialog-close]="newUserForm.value">Dodaj</button>
+
+    </form>
+</mat-dialog-content>

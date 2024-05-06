@@ -50,6 +50,13 @@ export class UserService {
     );
   }
 
+  addUser(user: User): Observable<User> {
+    return this.http.post<User>(this.usersUrl, user, this.httpOptions).pipe(
+      tap((newUser: User) => this.log(`added user w/ id=${newUser.id}`)),
+      catchError(this.handleError<User>('addUser'))
+    );
+  }
+  
   registerUser(user: User): Observable<any> {
     return this.http.post(this.usersUrl, user, this.httpOptions).pipe(
       tap(_=>this.log('registered user login=${user.login}')),
