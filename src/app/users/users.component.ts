@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgIf, JsonPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
+import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -27,6 +27,9 @@ export class UsersComponent {
   newUser?: User;
   columnsToDisplay = ['firstName', 'lastName', 'age', 'login', 'tools' ];
 
+  @ViewChild(MatTable)
+  table!: MatTable<User>;
+
   constructor(private userService: UserService, public dialog: MatDialog)
   {}
 
@@ -50,7 +53,10 @@ export class UsersComponent {
     const dialogRef = this.dialog.open(DialogAddUser);
     dialogRef.afterClosed().subscribe(result => {
       //this.newUser = result as User
-      this.users.push(result as User);
+      console.log('dialog Closed')
+      console.log(result as User); 
+      this.users.push(result);
+      this.table.renderRows();
     });
     //console.log(this.newUser);
 /*
@@ -84,14 +90,14 @@ export class DialogAddUser implements OnInit {
   get newUserFormControl() {
     return this.newUserForm.controls;
   }
-/*
+
   onSubmit() {
-    this.userService.addUser(this.newUserForm.value as User)
-      .subscribe( user => {
-        return user;
-      })
+    //this.userService.addUser(this.newUserForm.value as User)
+    //  .subscribe( user => {
+        return this.newUserForm.value as User;
+    //  })
   }
-*/
+
   ngOnInit(): void {
     this.newUserForm = this.formBuilder.group({
       lastName: new FormControl('', [
