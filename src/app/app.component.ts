@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, RouterModule, MatToolbarModule, MatIconModule, MatButtonModule, MatMenuModule, HttpClientModule ],
-  templateUrl: './app.component.html',
+  templateUrl: './templates/app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {

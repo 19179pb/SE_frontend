@@ -24,7 +24,7 @@
             </ng-container>
 
             <ng-container matColumnDef="tools">
-                <th mat-header-cell *matHeaderCellDef>Akcja <button mat-icon-button matTooltip="Dodaj"><mat-icon>add_notes</mat-icon></button></th>
+                <th mat-header-cell *matHeaderCellDef>Akcja <button mat-icon-button matTooltip="Dodaj" (click)="addInformation()"><mat-icon>add_notes</mat-icon></button></th>
                 <td mat-cell *matCellDef="let user">
                     <button mat-icon-button matTooltip="Usuń" (click)="deleteInformation(user)"><mat-icon>delete</mat-icon></button>
                     <button mat-icon-button matTooltip="Edytuj"><mat-icon>edit_note</mat-icon>></button>

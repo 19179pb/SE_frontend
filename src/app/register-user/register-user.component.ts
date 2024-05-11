@@ -4,8 +4,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-import { User } from '../user';
-import { UserService } from '../user.service';
+import { User } from '../models/user';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-register-user',

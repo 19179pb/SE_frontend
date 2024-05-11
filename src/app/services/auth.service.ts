@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { RegistrationResponse, UserRegistrationData, LoginData, LoginResponse } from './auth.interfaces';
+import { RegistrationResponse, UserRegistrationData, LoginData, LoginResponse } from '../models/auth.interfaces';
 import { Observable, of, firstValueFrom } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { User } from './user';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'

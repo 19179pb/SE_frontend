@@ -7,18 +7,18 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { User } from '../user';
-import { UserService } from '../user.service';
+import { User } from '../models/user';
+import { UserService } from '../services/user.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, FormControl, Validators, ReactiveFormsModule, FormGroup, FormBuilder, NonNullableFormBuilder } from '@angular/forms';
-import { NewUser } from '../newUser';
+import { NewUser } from '../models/newUser';
 
 @Component({
   selector: 'app-users',
   standalone: true,
   imports: [ MatCardModule, MatTableModule, MatButtonModule, MatIconModule, MatTooltipModule ],
-  templateUrl: './users.component.html',
+  templateUrl: '../templates/users.component.html',
   styleUrl: './users.component.scss'
 })
 
@@ -76,7 +76,7 @@ export class UsersComponent {
 
 @Component({
   selector: 'dialog-add-user',
-  templateUrl: './dialog-add-user.html',
+  templateUrl: '../templates/dialog-add-user.html',
   standalone: true,
   imports: [MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule , MatSelectModule, FormsModule, ReactiveFormsModule ],
 })
