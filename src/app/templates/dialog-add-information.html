@@ -31,7 +31,9 @@
                     <mat-error>Link musi byś prawidłowym adresem URL</mat-error>
                 }
             </mat-form-field>
-        </p><p>
+        </p>
+        <!--
+        <p>
             <mat-form-field>
                 <mat-label>Kategoria</mat-label>
                 <mat-select required formControlName="category">
@@ -43,7 +45,8 @@
                     <mat-error>Kategoria jest <strong>wymagana</strong></mat-error>
                 }
             </mat-form-field>
-        </p>
+        </p>-->
         <button type="button" [disabled]="!newInformationForm.valid" mat-button [mat-dialog-close]="newInformationForm.value">Dodaj</button>
+
     </form>
 </mat-dialog-content>

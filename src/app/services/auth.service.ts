@@ -10,7 +10,7 @@ import { User } from '../models/user';
 })
 export class AuthService {
 
-  private registrationUrl = 'api/users/register';
+  private registrationUrl = 'api/users';
   private loginUrl = 'api/users/login';
   private logoutUrl = 'api/users/logout';
   private userUrl = 'api/users/me';
