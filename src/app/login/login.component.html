@@ -1,8 +1,6 @@
-<button mat-menu-item>
-    <a routerLink="">
+<button mat-menu-item (click)="login()">
       <mat-icon>login</mat-icon>
       <span>Login</span>
-    </a>
   </button>
   <button mat-menu-item [routerLink]="['register-user']">
      <mat-icon>how_to_reg</mat-icon>
