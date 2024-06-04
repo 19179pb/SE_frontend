@@ -16,6 +16,6 @@ export interface LoginData {
 }
 
 export interface LoginResponse {
-    auth_token: string;
+    jwt: string;
 }
 

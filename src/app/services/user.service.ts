@@ -9,6 +9,7 @@ import { User } from '../models/user';
 })
 export class UserService {
   private usersUrl = '/api/users';
+  private adminUsersUrl = '/api/admin/users';
 
   httpOptions = {
     headers: new HttpHeaders({ 
@@ -35,7 +36,7 @@ export class UserService {
   }
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.usersUrl)
+    return this.http.get<User[]>(this.adminUsersUrl)
       .pipe(
         tap(_ => this.log(`fetched users`)),
         catchError(this.handleError<User[]>('getUsers', []))
@@ -51,8 +52,7 @@ export class UserService {
   }
 
   addUser(user: User): Observable<User> {
-    const url = this.usersUrl + '/admin';
-    return this.http.post<User>(this.usersUrl, user, this.httpOptions).pipe(
+    return this.http.post<User>(this.adminUsersUrl, user, this.httpOptions).pipe(
       tap((newUser: User) => this.log(`added user w/ id=${newUser.id}`)),
       catchError(this.handleError<User>('addUser'))
     );

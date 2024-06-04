@@ -7,11 +7,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
+import { AuthInterceptor } from './auth-interceptor';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, MatToolbarModule, MatIconModule, MatButtonModule, MatMenuModule, HttpClientModule , LoginComponent ],
+  imports: [RouterOutlet, RouterModule, MatToolbarModule, MatIconModule, MatButtonModule, MatMenuModule, HttpClientModule, LoginComponent ],
   templateUrl: './templates/app.component.html',
   styleUrl: './app.component.scss'
 })

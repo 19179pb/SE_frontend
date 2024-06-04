@@ -1,14 +1,14 @@
 <h2 mat-dialog-title>Dodaj informację</h2>
 <mat-dialog-content>
-    <form [formGroup]="newInformationForm">
+    <form [formGroup]="newCategoryForm">
         <p>
             <mat-form-field>
                 <mat-label>Tytuł</mat-label>
                 <input matInput placeholder="Tytuł" formControlName="title" required minlength="3" maxlength="20">
-                @if (newInformationForm.controls['title'].errors?.['required']) {
+                @if (newCategoryForm.controls['title'].errors?.['required']) {
                     <mat-error>Tytuł jest <strong>wymagany</strong></mat-error>
                 }
-                @if (newInformationForm.controls['title'].errors?.['minlength']) {
+                @if (newCategoryForm.controls['title'].errors?.['minlength']) {
                     <mat-error>Tytuł jest <strong>za krótki</strong></mat-error>
                 }
             </mat-form-field>          
@@ -16,10 +16,10 @@
             <mat-form-field>
                 <mat-label>Treść</mat-label>
                 <textarea matInput cdkTextareaAutosize placeholder="Treść" formControlName="content" required minlength="5" maxlength="500"></textarea>
-                @if (newInformationForm.controls['content'].errors?.['required']) {
+                @if (newCategoryForm.controls['content'].errors?.['required']) {
                     <mat-error>Treść jest <strong>wymagana</strong></mat-error>
                 }
-                @if(newInformationForm.controls['content'].errors?.['minlength']){
+                @if(newCategoryForm.controls['content'].errors?.['minlength']){
                     <mat-error>Treść jest <strong>za krótka</strong></mat-error>
                 }
             </mat-form-field>
@@ -27,7 +27,7 @@
             <mat-form-field>
                 <mat-label>Link</mat-label>
                 <input matInput type="text" formControlName="link" placeholder="URL">
-                @if(newInformationForm.controls['link'].errors?.['pattern']) {
+                @if(newCategoryForm.controls['link'].errors?.['pattern']) {
                     <mat-error>Link musi byś prawidłowym adresem URL</mat-error>
                 }
             </mat-form-field>
@@ -46,7 +46,7 @@
                 }
             </mat-form-field>
         </p>-->
-        <button type="button" [disabled]="!newInformationForm.valid" mat-button [mat-dialog-close]="newInformationForm.value">Dodaj</button>
+        <button type="button" [disabled]="!newCategoryForm.valid" mat-button [mat-dialog-close]="newCategoryForm.value">Dodaj</button>
 
     </form>
 </mat-dialog-content>

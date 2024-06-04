@@ -11,7 +11,7 @@ import { User } from '../models/user';
 export class AuthService {
 
   private registrationUrl = 'api/users';
-  private loginUrl = 'api/users/login';
+  private loginUrl = 'api/authenticate';
   private logoutUrl = 'api/users/logout';
   private userUrl = 'api/users/me';
 
@@ -50,7 +50,7 @@ export class AuthService {
   login(loginData: LoginData): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.loginUrl, loginData, this.httpOptions)
     .pipe(
-      tap((loginResp: LoginResponse) => this.log(`user logged in with auth token: ${loginResp.auth_token}`)),
+      tap((loginResp: LoginResponse) => this.log(`user logged in with auth token: ${loginResp.jwt}`)),
       catchError(this.handleError<LoginResponse>('login'))
     )
   }
@@ -96,6 +96,8 @@ export class AuthService {
   private setSignals(user: User): void {
     //TODO: get data from REST API
     this.isAdmin.set(true);
+    console.log ("set signal")
+    console.log(user);
     this.isFullUser.set(false);
     this.isLimitedUser.set(false);
   }
