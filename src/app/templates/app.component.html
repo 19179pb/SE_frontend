@@ -3,17 +3,7 @@
     <mat-icon color="accent">menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item>
-      <a routerLink="">
-        <mat-icon>login</mat-icon>
-        <span>Login</span>
-      </a>
-    </button>
-    <button mat-menu-item [routerLink]="['register-user']">
-       <mat-icon>how_to_reg</mat-icon>
-       <span>Zarejestruj się</span>
-    </button>
-
+    <app-login></app-login>
   </mat-menu>
   <span>StoreEverything</span>
   <button mat-button [routerLink]="['users']">

@@ -68,7 +68,7 @@ export class DialogAddInformation implements OnInit {
     private readonly formBuilder: NonNullableFormBuilder,
   ){}
 
-  get newUserFormControl() {
+  get newInformationFormControl() {
     return this.newInformationForm.controls;
   }
 

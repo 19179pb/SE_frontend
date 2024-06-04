@@ -4,7 +4,7 @@
         <p>
             <mat-form-field>
                 <mat-label>Nazwisko</mat-label>
-                <input matInput placeholder="Nazwisko" formControlName="lastName" required minlength="3" maxlength="50">
+                <input matInput placeholder="Nazwisko" formControlName="lastName" [(ngModel)]="user.firstName" required minlength="3" maxlength="50">
                 @if (newUserForm.controls['lastName'].errors?.['required']) {
                     <mat-error>Nazwisko jest <strong>wymagane</strong></mat-error>
                 }
@@ -19,7 +19,7 @@
         </p><p>
             <mat-form-field>
                 <mat-label>Imię</mat-label>
-                <input matInput placeholder="Imię" formControlName="firstName" required minlength="3" maxlength="20">
+                <input matInput placeholder="Imię" formControlName="firstName" [(ngModel)]="user.lastName" required minlength="3" maxlength="20">
                 @if (newUserForm.controls['firstName'].errors?.['required']) {
                     <mat-error>Imię jest <strong>wymagane</strong></mat-error>
                 }
@@ -34,7 +34,7 @@
         </p><p>
             <mat-form-field>
                 <mat-label>Wiek</mat-label>
-                <input matInput type="number" formControlName="age" placeholder="Wiek" required>
+                <input matInput type="number" formControlName="age" [(ngModel)]="user.age" placeholder="Wiek" required>
                 @if(newUserForm.controls['age'].errors?.['required']) {
                     <mat-error>Wiek jest <strong>wymagany</strong></mat-error>
                 }
@@ -68,9 +68,9 @@
             <mat-form-field>
                 <mat-label>Rola</mat-label>
                 <mat-select required formControlName="role">
-                    <mat-option value="1">Admin</mat-option>
-                    <mat-option value="2">Użytkownik</mat-option>
-                    <mat-option value="3">Użytkownik ograniczony</mat-option>
+                    <mat-option value="ROLE_ADMIN">Admin</mat-option>
+                    <mat-option value="ROLE_USER">Użytkownik</mat-option>
+                    <mat-option value="ROLE_LIMITED_USER">Użytkownik ograniczony</mat-option>
                 </mat-select>
                 @if(newUserForm.controls['role'].errors?.['required']) {
                     <mat-error>Rola jest <strong>wymagana</strong></mat-error>

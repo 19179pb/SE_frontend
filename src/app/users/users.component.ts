@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { NgIf, JsonPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { User } from '../models/user';
@@ -13,6 +13,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, FormControl, Validators, ReactiveFormsModule, FormGroup, FormBuilder, NonNullableFormBuilder } from '@angular/forms';
 import { NewUser } from '../models/newUser';
+import { Dialog } from '@angular/cdk/dialog';
+
+export interface DialogData {
+  user: User;
+}
 
 @Component({
   selector: 'app-users',
@@ -21,7 +26,6 @@ import { NewUser } from '../models/newUser';
   templateUrl: '../templates/users.component.html',
   styleUrl: './users.component.scss'
 })
-
 export class UsersComponent {
   users: User[] = [];
   newUser?: User;
@@ -50,28 +54,33 @@ export class UsersComponent {
   }
 
   addUser(): void {
-    const dialogRef = this.dialog.open(DialogAddUser);
+    
+    const dialogRef = this.dialog.open(DialogAddUser, {data:user});
     dialogRef.afterClosed().subscribe(result => {
-      //this.newUser = result as User
-      console.log('dialog Closed')
-      console.log(result as User); 
-      this.users.push(result);
-      this.table.renderRows();
-    });
-    //console.log(this.newUser);
-/*
-      this.userService.addUser(result as User)
-      .subscribe( user => {
-        console.log(this.users);
-        this.users.push(user);
-        console.log (this.users);
-  
-      })      
+      if (result === undefined) {
 
-    })
-*/
+      } else {
+        this.userService.addUser(result as User).subscribe(result => {
+          this.users.push(result);
+          this.table.renderRows();  
+        })  
+      }
+    });
   }
 
+  editUser(user: User): void {
+    const dialogRef = this.dialog.open(DialogAddUser, {data: user});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === undefined) {
+
+      } else {
+        this.userService.addUser(result as User).subscribe(result => {
+          this.users.push(result);
+          this.table.renderRows();  
+        })  
+      }
+    });
+  }
 }
 
 @Component({
@@ -82,10 +91,13 @@ export class UsersComponent {
 })
 export class DialogAddUser implements OnInit { 
   protected newUserForm!: FormGroup;
-  
+
   constructor(
     private readonly formBuilder: NonNullableFormBuilder,
+    @Inject(MAT_DIALOG_DATA) public user: User,
   ){}
+
+
 
   get newUserFormControl() {
     return this.newUserForm.controls;

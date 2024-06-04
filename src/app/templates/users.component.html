@@ -22,8 +22,7 @@
                 <th mat-header-cell *matHeaderCellDef>Akcja <button mat-icon-button matTooltip="Dodaj" (click)="addUser()"><mat-icon>person_add</mat-icon></button></th>
                 <td mat-cell *matCellDef="let user">
                     <button mat-icon-button matTooltip="Usuń" (click)="deleteUser(user)"><mat-icon>person_remove</mat-icon></button>
-                    <button mat-icon-button matTooltip="Edytuj"><mat-icon>manage_accounts</mat-icon>></button>
-                    <button mat-icon-button matTooltip="Role"><mat-icon>groups</mat-icon></button>
+                    <button mat-icon-button matTooltip="Edytuj" (click)="editUser(user)"><mat-icon>manage_accounts</mat-icon></button>
                 </td>
             </ng-container>
 

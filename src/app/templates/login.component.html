@@ -1,0 +1,18 @@
+<div *ngIf="user == undefined; else logoutBlock">
+  <button mat-menu-item (click)="login()">
+    <mat-icon>login</mat-icon>
+    <span>Login</span>
+  </button>  
+  <button mat-menu-item [routerLink]="['register-user']">
+    <mat-icon>how_to_reg</mat-icon>
+    <span>Zarejestruj się</span>
+ </button>
+</div>
+<ng-template #logoutBlock>
+  user:{{user.id }}
+  <button mat-menu-item>
+    <mat-icon>logout</mat-icon>
+    <span>Logout</span>
+  </button>  
+
+</ng-template>
