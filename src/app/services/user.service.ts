@@ -44,7 +44,7 @@ export class UserService {
   }
 
   deleteUser(id: number): Observable<User> {
-    const url = `${this.usersUrl}/${id}`;
+    const url = `${this.adminUsersUrl}/${id}`;
     return this.http.delete<User>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted user id=${id}`)),
       catchError(this.handleError<User>('deleteUser'))
@@ -57,7 +57,16 @@ export class UserService {
       catchError(this.handleError<User>('addUser'))
     );
   }
-  
+
+  editUser(user: User): Observable<User> {
+    const id = user.id;
+    const url = `${this.adminUsersUrl}/${id}`;
+    return this.http.put<User>(url, user, this.httpOptions).pipe(
+      tap((newUser: User) => this.log(`updated user w/ id=${newUser.id}`)),
+      catchError(this.handleError<User>('editUser'))
+    );
+  }
+
   registerUser(user: User): Observable<any> {
     return this.http.post(this.usersUrl, user, this.httpOptions).pipe(
       tap(_=>this.log('registered user login=${user.login}')),

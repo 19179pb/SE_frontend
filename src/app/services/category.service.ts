@@ -8,7 +8,7 @@ import { Category } from '../models/category';
   providedIn: 'root'
 })
 export class CategoryService {
-  private categoriesUrl = '/api/category';
+  private categoriesUrl = '/api/categories';
 
   httpOptions = {
     headers: new HttpHeaders({ 
@@ -47,6 +47,26 @@ export class CategoryService {
         catchError(this.handleError<Category>('getCategory'))
       );
   }
+
+  addCategory(category: Category): Observable<Category> {
+    //const url = `${this.categoriesUrl}/${id}`;
+    return this.http.post<Category>(this.categoriesUrl, category, this.httpOptions)
+      .pipe(
+        tap((cat: Category)=> this.log(`added category id=${cat.id}`)),
+        catchError(this.handleError<Category>('addCategory'))
+      );
+  }
+
+  editCategory(category: Category): Observable<Category> {
+    console.log(category);
+    const url = `${this.categoriesUrl}/${category.id}`;
+    return this.http.put<Category>(url, category, this.httpOptions)
+      .pipe(
+        tap((cat: Category)=> this.log(`updated category id=${cat.id}`)),
+        catchError(this.handleError<Category>('editCategory'))
+      );
+  }
+
 
   deleteCategory(id: number): Observable<Category> {
     const url = `${this.categoriesUrl}/${id}`;

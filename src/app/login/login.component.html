@@ -1,4 +1,7 @@
-<button mat-menu-item (click)="login()">
+@if (user === undefined ) {
+Logout
+} @else {
+   <button mat-menu-item (click)="login()">
       <mat-icon>login</mat-icon>
       <span>Login</span>
   </button>
@@ -6,3 +9,4 @@
      <mat-icon>how_to_reg</mat-icon>
      <span>Zarejestruj się</span>
   </button>
+}

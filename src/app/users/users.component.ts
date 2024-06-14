@@ -7,13 +7,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { User } from '../models/user';
+import { User, createUser } from '../models/user';
 import { UserService } from '../services/user.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, FormControl, Validators, ReactiveFormsModule, FormGroup, FormBuilder, NonNullableFormBuilder } from '@angular/forms';
 import { NewUser } from '../models/newUser';
 import { Dialog } from '@angular/cdk/dialog';
+import { empty } from 'rxjs';
 
 export interface DialogData {
   user: User;
@@ -44,7 +45,10 @@ export class UsersComponent {
 
   getUsers(): void {
     this.userService.getUsers()
-      .subscribe(users => this.users = users)
+      .subscribe(users => {
+        this.users = users
+        console.log(users);
+      })
   }
 
   deleteUser(user: User): void {
@@ -54,8 +58,8 @@ export class UsersComponent {
   }
 
   addUser(): void {
-    
-    const dialogRef = this.dialog.open(DialogAddUser, {data:user});
+    let user = createUser({});
+    const dialogRef = this.dialog.open(DialogAddUser, {data: {user, action: 'add'}});
     dialogRef.afterClosed().subscribe(result => {
       if (result === undefined) {
 
@@ -69,13 +73,15 @@ export class UsersComponent {
   }
 
   editUser(user: User): void {
-    const dialogRef = this.dialog.open(DialogAddUser, {data: user});
+    const dialogRef = this.dialog.open(DialogAddUser, {data: {user, action: 'edit'}});
     dialogRef.afterClosed().subscribe(result => {
       if (result === undefined) {
 
       } else {
-        this.userService.addUser(result as User).subscribe(result => {
-          this.users.push(result);
+        console.log(result);
+        this.userService.editUser(result as User).subscribe(result => {
+          const index = this.users.findIndex((el) => el.id == result.id)
+          this.users[index] = result;
           this.table.renderRows();  
         })  
       }
@@ -94,7 +100,8 @@ export class DialogAddUser implements OnInit {
 
   constructor(
     private readonly formBuilder: NonNullableFormBuilder,
-    @Inject(MAT_DIALOG_DATA) public user: User,
+    @Inject(MAT_DIALOG_DATA) public data: {user:User, action: string},
+  
   ){}
 
 
@@ -112,6 +119,9 @@ export class DialogAddUser implements OnInit {
 
   ngOnInit(): void {
     this.newUserForm = this.formBuilder.group({
+      id: new FormControl('', [
+        Validators.required,
+      ]),
       lastName: new FormControl('', [
         Validators.required,
         Validators.pattern('^[A-Z][a-zA-Z]+')
@@ -136,6 +146,14 @@ export class DialogAddUser implements OnInit {
       ])
     }
     )
+    this.newUserForm.controls['id'].setValue(this.data.user.id);
+    this.newUserForm.controls['lastName'].setValue(this.data.user.lastName);
+    this.newUserForm.controls['firstName'].setValue(this.data.user.firstName);
+    this.newUserForm.controls['age'].setValue(this.data.user.age);
+    this.newUserForm.controls['login'].setValue(this.data.user.login);
+    this.newUserForm.controls['password'].setValue(this.data.user.password);
+    this.newUserForm.controls['role'].setValue(this.data.user.role);
+
   }
  
 }

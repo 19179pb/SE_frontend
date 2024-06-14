@@ -9,10 +9,9 @@
  </button>
 </div>
 <ng-template #logoutBlock>
-  user:{{user.id }}
   <button mat-menu-item>
     <mat-icon>logout</mat-icon>
-    <span>Logout</span>
+    <span>Logout {{user?.login}}</span>
   </button>  
 
 </ng-template>

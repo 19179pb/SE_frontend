@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, effect } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,11 +20,13 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  user!: User;
-
+  user?: User;
+  //authService
   constructor(public dialog: MatDialog, public authService: AuthService)
   {
-
+    effect(() => {
+      this.user = this.authService.user();
+    })
   }
 
   login(): void {
@@ -34,7 +36,8 @@ export class LoginComponent {
       this.authService.login(result as LoginData)
         .subscribe(result => {
           localStorage.setItem("AuthToken", result.jwt)
-          this.authService.verifyToken()  
+          this.authService.verifyToken()
+          this.user = this.authService.user();
         });
     });
   }

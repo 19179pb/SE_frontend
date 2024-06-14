@@ -20,7 +20,6 @@ export class InformationService {
   constructor(private http: HttpClient) { }
 
   private log(message: string) {
-    console.log (message);
     //TODO: pass to message service
   }
 
@@ -48,6 +47,18 @@ export class InformationService {
         catchError(this.handleError<Information>('getInformation'))
       );
   }
+
+  addInformation(information: Information): Observable<Information> {
+    //const url = `${this.informationsUrl}/${id}`;
+    return this.http.post<Information>(this.informationsUrl, information, this.httpOptions)
+      .pipe(
+        tap(_ => {
+          console.log(_);
+          this.log(`added information`)}),
+        catchError(this.handleError<Information>('getInformation'))
+      );
+  }
+
 
   deleteInformation(id: number): Observable<Information> {
     const url = `${this.informationsUrl}/${id}`;

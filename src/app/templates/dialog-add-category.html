@@ -1,52 +1,28 @@
-<h2 mat-dialog-title>Dodaj informację</h2>
+@if (data.action=="add") {
+    <h2 mat-dialog-title>Dodaj kategorię</h2>
+} @else {
+    <h2 mat-dialog-title>Edytuj kategorię</h2>
+}
 <mat-dialog-content>
     <form [formGroup]="newCategoryForm">
+        <input matInput formControlName="id" hidden>
         <p>
             <mat-form-field>
-                <mat-label>Tytuł</mat-label>
-                <input matInput placeholder="Tytuł" formControlName="title" required minlength="3" maxlength="20">
-                @if (newCategoryForm.controls['title'].errors?.['required']) {
-                    <mat-error>Tytuł jest <strong>wymagany</strong></mat-error>
+                <mat-label>Nazwa</mat-label>
+                <input matInput placeholder="Nazwa" formControlName="name" required minlength="3" maxlength="20">
+                @if (newCategoryForm.controls['name'].errors?.['required']) {
+                    <mat-error>Nazwa jest <strong>wymagany</strong></mat-error>
                 }
-                @if (newCategoryForm.controls['title'].errors?.['minlength']) {
-                    <mat-error>Tytuł jest <strong>za krótki</strong></mat-error>
+                @if (newCategoryForm.controls['name'].errors?.['minlength']) {
+                    <mat-error>Nazwa jest <strong>za krótka</strong></mat-error>
                 }
             </mat-form-field>          
-        </p><p>
-            <mat-form-field>
-                <mat-label>Treść</mat-label>
-                <textarea matInput cdkTextareaAutosize placeholder="Treść" formControlName="content" required minlength="5" maxlength="500"></textarea>
-                @if (newCategoryForm.controls['content'].errors?.['required']) {
-                    <mat-error>Treść jest <strong>wymagana</strong></mat-error>
-                }
-                @if(newCategoryForm.controls['content'].errors?.['minlength']){
-                    <mat-error>Treść jest <strong>za krótka</strong></mat-error>
-                }
-            </mat-form-field>
-        </p><p>
-            <mat-form-field>
-                <mat-label>Link</mat-label>
-                <input matInput type="text" formControlName="link" placeholder="URL">
-                @if(newCategoryForm.controls['link'].errors?.['pattern']) {
-                    <mat-error>Link musi byś prawidłowym adresem URL</mat-error>
-                }
-            </mat-form-field>
         </p>
-        <!--
-        <p>
-            <mat-form-field>
-                <mat-label>Kategoria</mat-label>
-                <mat-select required formControlName="category">
-                    <mat-option value="1">Kat 1</mat-option>
-                    <mat-option value="2">Kat 2</mat-option>
-                    <mat-option value="3">Kat 3</mat-option>
-                </mat-select>
-                @if(newInformationForm.controls['role'].errors?.['required']) {
-                    <mat-error>Kategoria jest <strong>wymagana</strong></mat-error>
-                }
-            </mat-form-field>
-        </p>-->
-        <button type="button" [disabled]="!newCategoryForm.valid" mat-button [mat-dialog-close]="newCategoryForm.value">Dodaj</button>
-
+        @if(data.action=="add") {
+            <button type="button" [disabled]="!newCategoryForm.valid" mat-button [mat-dialog-close]="newCategoryForm.value">Dodaj</button>
+        } @else {
+            <button type="button" [disabled]="!newCategoryForm.valid" mat-button [mat-dialog-close]="newCategoryForm.value">Zapisz</button>            
+        }
     </form>
+
 </mat-dialog-content>

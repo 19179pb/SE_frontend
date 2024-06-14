@@ -1,4 +1,11 @@
+@if(data.action == "add"){
 <h2 mat-dialog-title>Dodaj informację</h2>
+} @else if (data.action == "edit") {
+    <h2 mat-dialog-title>Edytuj informację</h2>    
+} @else {
+    <h2 mat-dialog-title>Szczegóły informacji</h2>
+}
+
 <mat-dialog-content>
     <form [formGroup]="newInformationForm">
         <p>
@@ -32,20 +39,19 @@
                 }
             </mat-form-field>
         </p>
-        <!--
         <p>
             <mat-form-field>
                 <mat-label>Kategoria</mat-label>
                 <mat-select required formControlName="category">
-                    <mat-option value="1">Kat 1</mat-option>
-                    <mat-option value="2">Kat 2</mat-option>
-                    <mat-option value="3">Kat 3</mat-option>
+                    @for (category of data.categories; track category){
+                        <mat-option [value]="category.id">{{category.name}}</mat-option>    
+                    }
                 </mat-select>
-                @if(newInformationForm.controls['role'].errors?.['required']) {
+                @if(newInformationForm.controls['category'].errors?.['required']) {
                     <mat-error>Kategoria jest <strong>wymagana</strong></mat-error>
                 }
             </mat-form-field>
-        </p>-->
+        </p>
         <button type="button" [disabled]="!newInformationForm.valid" mat-button [mat-dialog-close]="newInformationForm.value">Dodaj</button>
 
     </form>
