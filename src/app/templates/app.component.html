@@ -1,21 +1,5 @@
 <mat-toolbar color="primary">
-  <button mat-button-icon color="accent" [matMenuTriggerFor]="menu">
-    <mat-icon color="accent">menu</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
     <app-login></app-login>
-  </mat-menu>
-  <span>StoreEverything</span>
-  <button mat-button [routerLink]="['users']">
-    Użytkownicy
-  </button>
-  <button mat-button [routerLink]="['categories']">
-    Kategorie
-  </button>
-  <button mat-button [routerLink]="['informations']">
-    Informacje
-  </button>
-
 </mat-toolbar>
 
 <router-outlet />

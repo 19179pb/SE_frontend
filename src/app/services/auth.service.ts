@@ -10,7 +10,7 @@ import { User } from '../models/user';
 })
 export class AuthService {
 
-  private registrationUrl = 'api/users';
+  private registrationUrl = 'api/register';
   private loginUrl = 'api/authenticate';
   private logoutUrl = 'api/users/logout';
   private userUrl = 'api/me';
@@ -40,8 +40,9 @@ export class AuthService {
     }
   }
 
-  registerUser(userData: UserRegistrationData): Observable<RegistrationResponse> {
-    return this.http.post<RegistrationResponse>(this.registrationUrl, userData, this.httpOptions)
+  registerUser(user: Partial<User>): Observable<RegistrationResponse> {
+    console.log(user);
+    return this.http.post<RegistrationResponse>(this.registrationUrl, user, this.httpOptions)
     .pipe(
       tap((regResp: RegistrationResponse) => this.log(`registered user: ${regResp.username}`)),
       catchError(this.handleError<RegistrationResponse>('registerUser'))
@@ -57,6 +58,7 @@ export class AuthService {
   }
 
   logout(): Observable<void> {
+    this.resetSignals();
     return this.http.post<void>(this.logoutUrl, this.httpOptions)
     .pipe(
       tap(() => this.log(`user logged out`)),
@@ -64,27 +66,27 @@ export class AuthService {
     )
   }
   
-  async verifyToken(): Promise<boolean> {
+  async verifyToken(): Promise<User|undefined> {
     try {
       const response = await firstValueFrom(this.http.get<User>(this.userUrl));
       if (response instanceof Object){
         if (response.id) {
           this.setSignals(response);
-          return true;
+          return response;
         } else {
           localStorage.removeItem('AuthToken');
           this.resetSignals();
-          return false;
+          return undefined;
         }
       } else {
         localStorage.removeItem('AuthToken');
         this.resetSignals();
-        return false;
+        return undefined;
       }
     } catch (error) {
       this.resetSignals();
       this.handleError<void>(`verifyToken: ${error}`);
-      return false;
+      return undefined;
     }
   }
 
@@ -92,22 +94,38 @@ export class AuthService {
     this.isAdmin.set(false);
     this.isFullUser.set(false);
     this.isLimitedUser.set(false);
+    this.isAnonymous.set(true);
+    this.user.set(undefined);
   }
 
   private setSignals(user: User): void {
+    console.log(user);
     this.isAdmin.set(false);
     this.isFullUser.set(false);
     this.isLimitedUser.set(false);
     this.isAnonymous.set(false);
     this.user.set(user);
-    if (user.role == "ROLE_ADMIN")
+    if (user.role == "ROLE_ADMIN"){
+      console.log("isAdmin");
       this.isAdmin.set(true);
+
+    }
     else if (user.role == "ROLE_LIMITED_USER")
-      this.isLimitedUser.set(true);
-    else if (user.role == "ROLE_FULL_USER")
-      this.isLimitedUser.set(true);
-    else
+      {
+        console.log("isLimited");
+        this.isLimitedUser.set(true);
+
+      }
+    else if (user.role == "ROLE_FULL_USER") {
+      console.log("isFull")
+      this.isFullUser.set(true);
+
+    }
+    else {
+      console.log("isAnon");
       this.isAnonymous.set(true);
+
+    }
   }
 
 }

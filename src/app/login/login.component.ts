@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule, FormGroup, NonNullableFormBuilder, Va
 import { LoginData, LoginResponse } from '../models/auth.interfaces';
 import { MatMenuModule } from '@angular/material/menu';
 import { User } from '../models/user';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-login',
@@ -21,11 +21,19 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent {
   user?: User;
+  isAdmin: boolean = false;
+  isAnonymous: boolean = true;
+  isFullUser: boolean = false;
+  isLimitedUser: boolean = false;
   //authService
-  constructor(public dialog: MatDialog, public authService: AuthService)
+  constructor(public dialog: MatDialog, public authService: AuthService, private router: Router)
   {
     effect(() => {
-      this.user = this.authService.user();
+      //this.user = this.authService.user();
+      this.isAdmin = this.authService.isAdmin();
+      this.isAnonymous = this.authService.isAnonymous();
+      this.isFullUser = this.authService.isFullUser();
+      this.isLimitedUser = this.authService.isLimitedUser();
     })
   }
 
@@ -36,10 +44,26 @@ export class LoginComponent {
       this.authService.login(result as LoginData)
         .subscribe(result => {
           localStorage.setItem("AuthToken", result.jwt)
-          this.authService.verifyToken()
-          this.user = this.authService.user();
+          this.authService.verifyToken().then(result => {
+            console.log(result);
+            this.user = result;
+            this.router.navigate(["informations"]);
+            console.log ("After navigate");
+          }
+          )
+          //this.user = this.authService.user();
         });
     });
+  }
+  logout(): void {
+    this.authService.logout()
+      .subscribe(result => {
+        localStorage.removeItem("AuthToken");
+        this.authService.verifyToken();  
+        this.user = undefined;
+        this.router.navigate([""]);
+      });
+  
   }
 }
 
@@ -66,6 +90,7 @@ export class DialogLogin implements OnInit {
   }
 
   onSubmit() {
+    console.log("Login");
     //this.userService.addUser(this.newUserForm.value as User)
     //  .subscribe( user => {
         return this.loginForm.value as LoginData;

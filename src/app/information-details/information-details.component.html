@@ -1,0 +1,21 @@
+<mat-card appearance="outlined">
+@if (information) {
+    <mat-card-header>
+        <mat-card-title>{{information?.title}}</mat-card-title>
+        <mat-card-subtitle>    <p>Utworzono: {{information?.addDate | date:"yyyy-MM-dd"}}</p>
+            <p>Kategoria: {{information?.categoryName}}</p>
+            @if(information?.link !="") {
+                <p><a href="information?.link">{{information?.link}}</a></p>
+            }
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+    <p>
+        {{information?.content}}
+    </p>    
+    </mat-card-content>    
+} @else {
+    <mat-card-header>Brak lub niedostępna informacja</mat-card-header>
+}
+<mat-card-footer></mat-card-footer>
+</mat-card>

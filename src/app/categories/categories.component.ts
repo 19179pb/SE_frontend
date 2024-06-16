@@ -4,6 +4,7 @@ import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -110,10 +111,11 @@ export class DialogAddCategory implements OnInit {
   ngOnInit(): void {
     this.newCategoryForm = this.formBuilder.group({
       id: new FormControl('', [
-        Validators.required,
+        //Validators.required,
       ]),
       name: new FormControl('', [
         Validators.required,
+        Validators.pattern(/([a-z])+/g),
       ]),
         }
     )

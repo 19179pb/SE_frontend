@@ -23,7 +23,7 @@ export function authInterceptor(req: HttpRequest<any>, next: HttpHandler):Observ
     const authToken = localStorage.getItem('AuthToken');
     //console.log ("Intercept");
         if (authToken) {
-          
+            console.log("Token injected");          
             req = req.clone({
                 setHeaders: {
                     Authorization: 'Bearer ' + authToken

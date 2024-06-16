@@ -1,9 +1,9 @@
 <mat-card>
     <mat-card-header>Informacje</mat-card-header>
     <mat-card-content>
-        <table mat-table [dataSource]="informations">
+        <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="informations">
             <ng-container matColumnDef="title">
-                <th mat-header-cell *matHeaderCellDef>Tytuł</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="title">Tytuł</th>
                 <td mat-cell *matCellDef="let information">{{information.title}}</td>
             </ng-container>
             <ng-container matColumnDef="link">
@@ -11,7 +11,7 @@
                 <td mat-cell *matCellDef="let information">{{information.link}}</td>
             </ng-container>
             <ng-container matColumnDef="addDate">
-                <th mat-header-cell *matHeaderCellDef>Dodano</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="addDate">Dodano</th>
                 <td mat-cell *matCellDef="let information">{{information.addDate|date:"yyyy-MM-dd"}}</td>
             </ng-container>
             <ng-container matColumnDef="remind_date">
@@ -19,21 +19,29 @@
                 <td mat-cell *matCellDef="let information"></td>
             </ng-container>
             <ng-container matColumnDef="category">
-                <th mat-header-cell *matHeaderCellDef>Kategoria</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="categoryName">Kategoria</th>
                 <td mat-cell *matCellDef="let information">{{information.categoryName}}</td>
             </ng-container>
             
 
             <ng-container matColumnDef="tools">
                 <th mat-header-cell *matHeaderCellDef>Akcja <button mat-icon-button matTooltip="Dodaj" (click)="addInformation()"><mat-icon>add_notes</mat-icon></button></th>
-                <td mat-cell *matCellDef="let user">
-                    <button mat-icon-button matTooltip="Usuń" (click)="deleteInformation(user)"><mat-icon>delete</mat-icon></button>
-                    <button mat-icon-button matTooltip="Edytuj"><mat-icon>edit_note</mat-icon>></button>
+                <td mat-cell *matCellDef="let information">
+                    <button mat-icon-button matTooltip="Usuń" (click)="deleteInformation(information)"><mat-icon>delete</mat-icon></button>
+                    <button mat-icon-button matTooltip="Edytuj" (click)="editInformation(information)"><mat-icon>edit_note</mat-icon></button>
+                    <button [routerLink]="['/informations', information.id]" mat-icon-button matTooltip="Szczegóły"><mat-icon>loupe</mat-icon></button>
                 </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-            <tr mat-row (click)="showDetails(row)" *matRowDef="let row; columns: columnsToDisplay;"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>       
         </table>
+        <mat-paginator
+            (page)="handlePageEvent($event)"
+            [length]="length"
+            [pageSize]="pageSize"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page">
+        </mat-paginator>
     </mat-card-content>
 </mat-card>

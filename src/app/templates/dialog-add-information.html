@@ -8,6 +8,7 @@
 
 <mat-dialog-content>
     <form [formGroup]="newInformationForm">
+        <input matInput formControlName="id" hidden>
         <p>
             <mat-form-field>
                 <mat-label>Tytuł</mat-label>
@@ -39,20 +40,58 @@
                 }
             </mat-form-field>
         </p>
-        <p>
-            <mat-form-field>
-                <mat-label>Kategoria</mat-label>
-                <mat-select required formControlName="category">
-                    @for (category of data.categories; track category){
-                        <mat-option [value]="category.id">{{category.name}}</mat-option>    
+        @if (data.action == "details") {
+            <p>
+                <mat-form-field>
+                    <mat-label>Dodano</mat-label>
+                    <input matInput type="date" formControlName="addDate" readonly>
+                </mat-form-field>
+            </p>
+        @if (data.information.remainder != undefined) {
+            <p>
+                <mat-form-field>
+                    <mat-label>Przypomnij</mat-label>
+                    <input matInput type="date" formControlName="remainder" readonly>
+                </mat-form-field>
+    
+            </p>
+    
+        }
+        }
+        @if(data.action=="add" || data.action=="edit"){
+            <p>
+                <mat-form-field>
+                    <mat-label>Kategoria</mat-label>
+                    <mat-select required formControlName="category">
+                        @for (category of data.categories; track category){
+                            <mat-option [value]="category.id">{{category.name}}</mat-option>    
+                        }
+                    </mat-select>
+                    @if(newInformationForm.controls['category'].errors?.['required']) {
+                        <mat-error>Kategoria jest <strong>wymagana</strong></mat-error>
                     }
-                </mat-select>
-                @if(newInformationForm.controls['category'].errors?.['required']) {
-                    <mat-error>Kategoria jest <strong>wymagana</strong></mat-error>
-                }
-            </mat-form-field>
+                </mat-form-field>
+            </p>
+    
+        } @else {
+            <p>
+                <mat-form-field>
+                    <mat-label>Kategoria</mat-label>
+                    <input matInput type=text formControlName="categoryName">
+                
+                </mat-form-field>
+            </p>
+        
+        }
+        <p>
+            
+                <mat-slide-toggle formControlName="isPublic">Czy publiczny?</mat-slide-toggle>
+          
         </p>
-        <button type="button" [disabled]="!newInformationForm.valid" mat-button [mat-dialog-close]="newInformationForm.value">Dodaj</button>
+        @if(data.action != "details")
+        {
+            <button type="button" [disabled]="!newInformationForm.valid" mat-button [mat-dialog-close]="newInformationForm.value">Dodaj</button>
+        }
 
     </form>
 </mat-dialog-content>

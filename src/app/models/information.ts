@@ -9,6 +9,33 @@ export interface Information {
     categoryName?: string;
 }
 
+export interface Sort {
+
+}
+
+export interface PagedRequest {
+    page: number;
+    size: number;
+    sortRow: string;
+    sortDir: string;
+}
+
+export interface Pageable {
+    pageNumber: number;
+    pageSize: number;
+  
+
+}
+
+export interface Content {
+    content: Information[];
+    pageable: Pageable;
+    totalPages: number;
+    totalElements: number;
+    size: number;
+    number: number;
+}
+
 const emptyInformation = (): Information => ({
     id: undefined,
     title: undefined,

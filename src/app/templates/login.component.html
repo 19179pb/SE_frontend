@@ -1,3 +1,8 @@
+<button mat-button-icon color="accent" [matMenuTriggerFor]="menu">
+  <mat-icon color="accent">menu</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+
 <div *ngIf="user == undefined; else logoutBlock">
   <button mat-menu-item (click)="login()">
     <mat-icon>login</mat-icon>
@@ -9,9 +14,31 @@
  </button>
 </div>
 <ng-template #logoutBlock>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="logout()">
     <mat-icon>logout</mat-icon>
     <span>Logout {{user?.login}}</span>
   </button>  
 
 </ng-template>
+
+</mat-menu>
+<button mat-button [routerLink]="['']">
+  StoreEverything
+</button>    
+
+@if(isAdmin) {
+   <button mat-button [routerLink]="['users']">
+      Użytkownicy
+    </button>    
+}
+@if(isAdmin || isFullUser) {
+  <button mat-button [routerLink]="['categories']">
+    Kategorie
+  </button>  
+}
+@if(isAnonymous == false){
+  <button mat-button [routerLink]="['informations']">
+    Informacje
+  </button>
+}
+

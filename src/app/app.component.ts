@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { RouterModule } from '@angular/router';
+import { RouterOutlet, Router } from '@angular/router';
+import { RouterModule, Route } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,5 +17,9 @@ import { AuthInterceptor } from './auth-interceptor';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+  constructor(private router: Router) {
+
+  }
   title = 'store-everything';
+  //this.router.navigate(["homepage"])
 }

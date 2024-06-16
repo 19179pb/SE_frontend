@@ -1,5 +1,12 @@
-@if (user === undefined ) {
-Logout
+<button mat-button-icon color="accent" [matMenuTriggerFor]="menu">
+   <mat-icon color="accent">menu</mat-icon>
+ </button>
+<mat-menu #menu="matMenu">
+@if (user != undefined ) {
+   <button mat-menu-item (click)="login()">
+      <mat-icon>login</mat-icon>
+      <span>Login</span>
+  </button>
 } @else {
    <button mat-menu-item (click)="login()">
       <mat-icon>login</mat-icon>
@@ -10,3 +17,18 @@ Logout
      <span>Zarejestruj się</span>
   </button>
 }
+</mat-menu>
+<button mat-button [routerLink]="['']">
+   StoreEverything
+ </button>
+@if(isAdmin) {
+   <button mat-button [routerLink]="['users']">
+      Użytkownicy
+    </button>    
+}
+<button mat-button [routerLink]="['categories']">
+  Kategorie
+</button>
+<button mat-button [routerLink]="['informations']">
+  Informacje
+</button>
